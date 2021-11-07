@@ -10,7 +10,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class MoodleModuleDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private Integer visible;
     private Boolean uservisible;
@@ -21,11 +21,11 @@ public class MoodleModuleDTO {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

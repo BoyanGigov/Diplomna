@@ -13,18 +13,22 @@ public class MoodleModuleMO extends ModelBase {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "MoodleModuleGenerator")
-    @SequenceGenerator(name = "MoodleModuleGenerator", sequenceName = "MOODLE_MODULE_SEQ")
+    @SequenceGenerator(name = "MoodleModuleGenerator", sequenceName = "MOODLE_MODULE_SEQ", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "COURSE_ID", referencedColumnName = "COURSE_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name = "COURSE_ID", referencedColumnName = "COURSE_ID", nullable = false),
+//            @JoinColumn(name = "SECTION_ID", referencedColumnName = "SECTION_ID", nullable = false)
+//    })
+    @JoinColumn(name = "SECTION_ID", referencedColumnName = "ID", nullable = false, unique = true)
     private MoodleCourseSectionMO courseSection;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "module", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<MoodleContentMO> contents;
 
-    @Column(name = "MODULE_ID", nullable = false)
-    private Integer moduleId;
+//    @Column(name = "MODULE_ID", nullable = false, unique = true)
+//    private Long moduleId;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -71,13 +75,13 @@ public class MoodleModuleMO extends ModelBase {
         this.contents.add(content);
     }
 
-    public Integer getModuleId() {
-        return moduleId;
-    }
-
-    public void setModuleId(Integer moduleId) {
-        this.moduleId = moduleId;
-    }
+//    public Long getModuleId() {
+//        return moduleId;
+//    }
+//
+//    public void setModuleId(Long moduleId) {
+//        this.moduleId = moduleId;
+//    }
 
     public String getName() {
         return name;

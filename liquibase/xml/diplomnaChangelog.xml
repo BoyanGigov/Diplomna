@@ -7,5 +7,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
     http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd ">
 
-    <using>DIPLOMNA-1.0.changelog.xml</using>
+<!--    To run all files, use cmd to go to the directory this file is located in (and the liquibase.properties file)-->
+<!--    and run             liquibase update                                                                        -->
+
+    <include file="DIPLOMNA-1.0.changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

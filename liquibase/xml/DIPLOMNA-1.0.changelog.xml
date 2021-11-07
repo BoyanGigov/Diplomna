@@ -7,19 +7,93 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
     http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd ">
 
-    <changeSet author="Boyan.Gigov" id="1">
-        <createTable tableName="Data">
-            <column name="id" type="int">
-                <constraints primaryKey="true"/>
+    <changeSet author="Boyan.Gigov" id="create-MOODLE_SECTION">
+        <createTable tableName="MOODLE_SECTION">
+            <column name="ID" type="number" remarks="primary key">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(50)">
+            <column name="COURSE_ID" type="number" remarks="id of the course as provided by moodle">
                 <constraints nullable="false"/>
             </column>
-            <column name="address1" type="varchar(50)"/>
-            <column name="address2" type="varchar(50)"/>
-            <column name="city" type="varchar(30)"/>
+            <column name="SECTION_ID" type="number" remarks="id of the section as provided by moodle">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COURSE_NAME" type="varchar2(300 char)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SECTION_NAME" type="varchar2(300 char)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_VISIBLE" type="boolean" defaultValue="0" remarks="can user see this section?">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-        <createSequence></createSequence>
+        <createSequence sequenceName="MOODLE_SECTION_SEQ" incrementBy="1" minValue="1" startValue="1" />
+        <addUniqueConstraint
+                columnNames="COURSE_ID, SECTION_ID"
+                constraintName="UNIQUE_COURSE_SECTION"
+                tableName="MOODLE_SECTION"
+        />
+    </changeSet>
+
+    <changeSet author="Boyan.Gigov" id="create-MOODLE_MODULE">
+        <createTable tableName="MOODLE_MODULE">
+            <column name="ID" type="number" remarks="primary key">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="SECTION_ID" type="number" remarks="id of the section as provided by moodle">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar2(300 char)" remarks="display name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VISIBLE" type="number" remarks="???">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_VISIBLE" type="boolean" defaultValue="0" remarks="can user see this module?">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence sequenceName="MOODLE_MODULE_SEQ" incrementBy="1" minValue="1" startValue="1" />
+        <addForeignKeyConstraint baseTableName="MOODLE_MODULE"
+                                 baseColumnNames="SECTION_ID"
+                                 constraintName="SECTION_ID_FK"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 referencedTableName="MOODLE_SECTION"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet author="Boyan.Gigov" id="create-MOODLE_CONTENT">
+        <createTable tableName="MOODLE_CONTENT">
+            <column name="ID" type="number" remarks="primary key">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="MODULE_ID" type="number" remarks="id of the module as provided by moodle">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="varchar2(20 char)" remarks="type of the content, file or url">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FILE_NAME" type="varchar2(300 char)" remarks="name of the file as seen in moodle">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FILE_URL" type="varchar2(300 char)" remarks="url to download the file provided by moodle">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MIME_TYPE" type="varchar2(100 char)" remarks="mime type of the file provided by moodle">
+            </column>
+            <column name="AUTHOR" type="varchar2(200 char)" remarks="creator of the content in moodle">
+            </column>
+        </createTable>
+        <createSequence sequenceName="MOODLE_CONTENT_SEQ" incrementBy="1" minValue="1" startValue="1" />
+        <addForeignKeyConstraint baseTableName="MOODLE_CONTENT"
+                                 baseColumnNames="MODULE_ID"
+                                 constraintName="MODULE_ID_FK"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 referencedTableName="MOODLE_MODULE"
+                                 referencedColumnNames="ID"/>
     </changeSet>
 
 </databaseChangeLog>

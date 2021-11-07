@@ -5,35 +5,34 @@ import all.persistence.ModelBase;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "MOODLE_COURSE_SECTION")
+@Table(name = "MOODLE_SECTION")
 public class MoodleCourseSectionMO extends ModelBase {
 
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "MoodleCourseSectionGenerator")
-    @SequenceGenerator(name = "MoodleCourseSectionGenerator", sequenceName = "MOODLE_COURSE_SECTION_SEQ")
+    @SequenceGenerator(name = "MoodleCourseSectionGenerator", sequenceName = "MOODLE_SECTION_SEQ", allocationSize = 1)
     private Long id;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "courseSection", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<MoodleModuleMO> modules;
 
     @Column(name = "COURSE_ID", nullable = false)
-    private Integer courseId;
+    private Long courseId;
 
-    @Column(name = "COURSE_DISPLAY_NAME", nullable = false)
-    private String courseDisplayName;
+    @Column(name = "SECTION_ID", nullable = false, unique = true)
+    private Long sectionId;
 
-    @Column(name = "SECTION_ID", nullable = false)
-    private Integer sectionId;
+    @Column(name = "COURSE_NAME", nullable = false)
+    private String courseName;
 
-    private String summary; // html format
-
+    @Column(name = "SECTION_NAME", nullable = false)
     private String sectionName;
 
+    @Column(name = "USER_VISIBLE", nullable = false)
     private Boolean uservisible;
 
     @Override
@@ -66,36 +65,28 @@ public class MoodleCourseSectionMO extends ModelBase {
         }
     }
 
-    public Integer getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
-    public String getCourseDisplayName() {
-        return courseDisplayName;
-    }
-
-    public void setCourseDisplayName(String courseDisplayName) {
-        this.courseDisplayName = courseDisplayName;
-    }
-
-    public Integer getSectionId() {
+    public Long getSectionId() {
         return sectionId;
     }
 
-    public void setSectionId(Integer sectionId) {
+    public void setSectionId(Long sectionId) {
         this.sectionId = sectionId;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getSectionName() {

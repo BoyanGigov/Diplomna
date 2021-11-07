@@ -1,6 +1,7 @@
 package all.service;
 
 import all.component.diplomna.MoodleApi;
+import all.component.diplomna.model.MoodleCourseSectionMO;
 import com.google.gson.Gson;
 import all.component.diplomna.MyApi;
 import all.component.diplomna.model.dto.DataDTO;
@@ -20,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 @Service
 @Path("/myService")
@@ -47,22 +49,33 @@ public class MyService {
         return Response.ok("dataMO", MediaType.APPLICATION_JSON).build();
     }
 
+    @Path("/getCourseData")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getCouseData(@Context HttpServletRequest request,
+                                  @QueryParam("courseId") Long courseId) {
+
+        List<MoodleCourseSectionMO> courseSections = moodleApi.getCourseFilesFromDB(courseId);
+        return Response.ok(courseSections, MediaType.APPLICATION_JSON).build();
+    }
+
     @Path("/getCouseFiles/{courseId}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getCouseFiles(@Context HttpServletRequest request,
-                                  @PathParam("courseId") int courseId) {
+                                  @PathParam("courseId") Long courseId) {
 
         String fileName = "course_"+courseId+".zip";
         return Response.ok(getStreamingOutput(courseId), MediaType.APPLICATION_OCTET_STREAM).header(
                 "content-disposition","attachment; filename = " + fileName).build();
     }
 
-    private StreamingOutput getStreamingOutput(int courseId) {
+    private StreamingOutput getStreamingOutput(Long courseId) {
         return new StreamingOutput() {
             @Override
             public void write(OutputStream outputStream) throws IOException, WebApplicationException {
                 moodleApi.getCourseFilesFromDB(courseId, outputStream);
+//                moodleApi.testArchiving(courseId, outputStream);
                 outputStream.flush();
             }
         };

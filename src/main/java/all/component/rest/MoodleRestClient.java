@@ -73,7 +73,7 @@ public class MoodleRestClient {
         }
     }
 
-    public MoodleCourseSectionDTO[] getCourseContents(int courseId) {
+    public MoodleCourseSectionDTO[] getCourseContents(Long courseId) {
         Response response = buildRequest("&wsfunction=core_course_get_contents&courseid=" + courseId, MediaType.TEXT_PLAIN_TYPE, MediaType.APPLICATION_JSON_TYPE).get(Response.class);
         if (response.getStatus() == HttpStatus.OK.value()) {
             return response.readEntity(MoodleCourseSectionDTO[].class);
@@ -88,9 +88,18 @@ public class MoodleRestClient {
         if (response.getStatus() == HttpStatus.OK.value()) {
             File downloadedFile = response.readEntity(File.class);
             String absPath = downloadedFile.getAbsolutePath();
-            boolean success = downloadedFile.renameTo(new File(absPath.replace(absPath.substring(absPath.lastIndexOf('\\')+1), fileName)));
-            if (!success) {
-                logger.error("failed to rename file " + downloadedFile.getAbsolutePath());
+            String renamedFilePath = absPath.replace(absPath.substring(absPath.lastIndexOf('\\')+1), fileName);
+            if (downloadedFile.renameTo(new File(renamedFilePath))) {
+                downloadedFile = new File(renamedFilePath);
+            } else {
+                logger.error("failed to rename file " + downloadedFile.getAbsolutePath() + " to " + renamedFilePath);
+                for (int attempt = 1; attempt < 4; attempt++) {
+                    renamedFilePath += attempt;
+                    logger.error("retrying to rename file " + downloadedFile.getAbsolutePath() + " to " + renamedFilePath);
+                    if (downloadedFile.renameTo(new File(renamedFilePath))) {
+                        downloadedFile = new File(renamedFilePath);
+                    }
+                }
             }
             return downloadedFile;
         } else {

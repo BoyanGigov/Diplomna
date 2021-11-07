@@ -17,13 +17,12 @@ public class MoodleConverter {
 
     private static Logger logger = Logger.getLogger(MoodleConverter.class);
 
-    public MoodleCourseSectionMO convertDtoToMo(MoodleCourseSectionDTO section, Integer courseId, String courseDisplayName) {
+    public MoodleCourseSectionMO convertDtoToMo(MoodleCourseSectionDTO section, Long courseId, String courseDisplayName) {
         MoodleCourseSectionMO mo = new MoodleCourseSectionMO();
         mo.setCourseId(courseId);
-        mo.setCourseDisplayName(courseDisplayName);
         mo.setSectionId(section.getId());
+        mo.setCourseName(courseDisplayName);
         mo.setSectionName(section.getName());
-        mo.setSummary(section.getSummary());
         mo.setUservisible(section.getUservisible());
         if (section.getModules() != null) {
             Arrays.stream(section.getModules()).forEach(moduleDTO -> mo.addMoudle(convertDtoToMo(moduleDTO, mo)));
@@ -33,7 +32,6 @@ public class MoodleConverter {
 
     public MoodleModuleMO convertDtoToMo(MoodleModuleDTO moduleDTO, MoodleCourseSectionMO sectionMO) {
         MoodleModuleMO mo = new MoodleModuleMO();
-        mo.setModuleId(moduleDTO.getId());
         mo.setName(moduleDTO.getName());
         mo.setVisible(moduleDTO.getVisible());
         mo.setUserVisible(moduleDTO.isUserVisible());
@@ -46,7 +44,6 @@ public class MoodleConverter {
 
     public MoodleContentMO convertDtoToMo(MoodleContentDTO contentDTO, MoodleModuleMO moduleMO) {
         MoodleContentMO mo = new MoodleContentMO();
-        mo.setContentId(contentDTO.getId());
         mo.setType(contentDTO.getType());
         mo.setFileName(contentDTO.getFilename());
         mo.setFileurl(contentDTO.getFileurl());

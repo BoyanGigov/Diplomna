@@ -1,7 +1,5 @@
 package all.persistence.dao;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -15,7 +13,7 @@ public abstract class DaoBaseImpl<T extends ModelBase> implements DaoBase<T> {
 
     public static final int NO_MAX_RESULT_LIMIT = -1;
     private static final Object[] NO_PARAMS = null;
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+//    protected Logger logger = LoggerFactory.getLogger(getClass());
     protected Class<T> entityClass;
 
     @SuppressWarnings("unchecked")

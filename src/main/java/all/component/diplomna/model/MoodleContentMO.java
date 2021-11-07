@@ -9,17 +9,18 @@ import javax.persistence.*;
 public class MoodleContentMO extends ModelBase {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "MoodleContentGenerator")
-    @SequenceGenerator(name = "MoodleContentGenerator", sequenceName = "MOODLE_CONTENT_SEQ")
+    @SequenceGenerator(name = "MoodleContentGenerator", sequenceName = "MOODLE_CONTENT_SEQ", allocationSize = 1)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "MODULE_ID", referencedColumnName = "MODULE_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name = "SECTION_ID", referencedColumnName = "SECTION_ID", nullable = false),
+//            @JoinColumn(name = "MODULE_ID", referencedColumnName = "MODULE_ID", nullable = false)
+//    })
+    @JoinColumn(name = "MODULE_ID", referencedColumnName = "ID", nullable = false, unique = true)
     private MoodleModuleMO module;
-
-    @Column(name = "CONTENT_ID", nullable = false)
-    private Integer contentId;
 
     @Column(name = "TYPE", nullable = false)
     private String type; // "file" or "url"
@@ -27,16 +28,13 @@ public class MoodleContentMO extends ModelBase {
     @Column(name = "FILE_NAME", nullable = false)
     private String fileName;
 
-//    @Column(name = "FILE_SIZE", nullable = false)
-//    private Long filesize;
-
     @Column(name = "FILE_URL", nullable = false)
     private String fileurl;
 
-    @Column(name = "MIME_TYPE", nullable = false)
+    @Column(name = "MIME_TYPE")
     private String mimetype; // null if type is "url"
 
-    @Column(name = "AUTHOR", nullable = false)
+    @Column(name = "AUTHOR")
     private String author;
 
     @Override
@@ -55,14 +53,6 @@ public class MoodleContentMO extends ModelBase {
 
     public void setModule(MoodleModuleMO module) {
         this.module = module;
-    }
-
-    public Integer getContentId() {
-        return contentId;
-    }
-
-    public void setContentId(Integer contentId) {
-        this.contentId = contentId;
     }
 
     public String getType() {

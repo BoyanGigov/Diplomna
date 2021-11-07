@@ -1,7 +1,7 @@
 package all.component.diplomna.dao;
 
-import all.component.diplomna.dao.interfaces.MoodleCourseInfoDao;
-import all.component.diplomna.model.MoodleCourseSectionMO;
+import all.component.diplomna.dao.interfaces.MoodleModuleDao;
+import all.component.diplomna.model.MoodleModuleMO;
 import all.persistence.dao.DiplomnaDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,11 +12,11 @@ import javax.persistence.Query;
 
 @Transactional("diplomnaTransactionManager")
 @Repository
-public class MoodleCourseInfoDaoImpl extends DiplomnaDaoImpl<MoodleCourseSectionMO> implements MoodleCourseInfoDao {
+public class MoodleModuleDaoImpl extends DiplomnaDaoImpl<MoodleModuleMO> implements MoodleModuleDao {
 
     @Override
-    public MoodleCourseSectionMO saveCourseInfo(MoodleCourseSectionMO mo) {
-        MoodleCourseSectionMO dbValue = getCourseInfoByCourseId(mo.getCourseId());
+    public MoodleModuleMO saveCourseInfo(MoodleModuleMO mo) {
+        MoodleModuleMO dbValue = getModuelByModuleId(mo.getId());
         if (dbValue != null) {
             // update values
             return super.save(dbValue);
@@ -26,13 +26,13 @@ public class MoodleCourseInfoDaoImpl extends DiplomnaDaoImpl<MoodleCourseSection
     }
 
     @Override
-    public MoodleCourseSectionMO getCourseInfoByCourseId(int courseId) {
+    public MoodleModuleMO getModuelByModuleId(Long moduleId) {
         String selectStr = "from " + this.entityClass.getSimpleName() + " mo" +
-                " where mo.courseId = (:courseId)";
+                " where mo.id = (:moduleId)";
         Query query = getEntityManager().createQuery(selectStr);
-        query.setParameter("courseId", courseId);
+        query.setParameter("moduleId", moduleId);
         try {
-            MoodleCourseSectionMO retVal = (MoodleCourseSectionMO) query.getSingleResult();
+            MoodleModuleMO retVal = (MoodleModuleMO) query.getSingleResult();
             return retVal;
         } catch (NoResultException e) {
             return null;

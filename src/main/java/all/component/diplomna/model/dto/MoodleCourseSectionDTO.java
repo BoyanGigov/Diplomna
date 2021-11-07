@@ -13,7 +13,7 @@ import java.util.List;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class MoodleCourseSectionDTO {
 
-    private Integer id;
+    private Long id;
     private String name;
     private Integer visible;
     private Boolean uservisible;
@@ -24,11 +24,11 @@ public class MoodleCourseSectionDTO {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

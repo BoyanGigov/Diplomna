@@ -6,7 +6,9 @@
 
     <persistence-unit name="diplomnaEntityManager">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>all.component.diplomna.model.DataMO</class>
+        <class>all.component.diplomna.model.MoodleCourseSectionMO</class>
+        <class>all.component.diplomna.model.MoodleModuleMO</class>
+        <class>all.component.diplomna.model.MoodleContentMO</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>

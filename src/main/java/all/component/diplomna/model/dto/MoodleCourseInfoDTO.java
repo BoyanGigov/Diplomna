@@ -11,17 +11,17 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class MoodleCourseInfoDTO {
 
-    private int id;
+    private Long id;
     private String displayname;
     private String summary; // html format
     private int newsitems;
     private int numsections;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

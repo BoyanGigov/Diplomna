@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 //@JsonIgnoreProperties(ignoreUnknown = true)
 public class MoodleContentDTO {
 
-    private int id;
+    private Long id;
     private String type; // "file" or "url"
     private String filename;
     private Long filesize;
@@ -23,11 +23,11 @@ public class MoodleContentDTO {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
