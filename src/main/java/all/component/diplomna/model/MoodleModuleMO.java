@@ -1,6 +1,10 @@
 package all.component.diplomna.model;
 
 import all.persistence.ModelBase;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,7 +12,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "MOODLE_MODULE")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class MoodleModuleMO extends ModelBase {
+
+    private static final long serialVersionUID = -12345678901L;
 
     @Id
     @Column(name = "ID")
@@ -17,18 +26,11 @@ public class MoodleModuleMO extends ModelBase {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "COURSE_ID", referencedColumnName = "COURSE_ID", nullable = false),
-//            @JoinColumn(name = "SECTION_ID", referencedColumnName = "SECTION_ID", nullable = false)
-//    })
     @JoinColumn(name = "SECTION_ID", referencedColumnName = "ID", nullable = false, unique = true)
     private MoodleCourseSectionMO courseSection;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "module", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private Set<MoodleContentMO> contents;
-
-//    @Column(name = "MODULE_ID", nullable = false, unique = true)
-//    private Long moduleId;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -38,6 +40,9 @@ public class MoodleModuleMO extends ModelBase {
 
     @Column(name = "USER_VISIBLE", nullable = false)
     private Boolean userVisible;
+
+    @Transient // will not be saved to the DB
+    private String modName;
 
     @Override
     public Long getId() {
@@ -75,14 +80,6 @@ public class MoodleModuleMO extends ModelBase {
         this.contents.add(content);
     }
 
-//    public Long getModuleId() {
-//        return moduleId;
-//    }
-//
-//    public void setModuleId(Long moduleId) {
-//        this.moduleId = moduleId;
-//    }
-
     public String getName() {
         return name;
     }
@@ -105,5 +102,13 @@ public class MoodleModuleMO extends ModelBase {
 
     public void setUserVisible(Boolean userVisible) {
         this.userVisible = userVisible;
+    }
+
+    public String getModName() {
+        return modName;
+    }
+
+    public void setModName(String modName) {
+        this.modName = modName;
     }
 }

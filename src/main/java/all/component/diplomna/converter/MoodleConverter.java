@@ -7,15 +7,18 @@ import all.component.diplomna.model.MoodleModuleMO;
 import all.component.diplomna.model.dto.MoodleContentDTO;
 import all.component.diplomna.model.dto.MoodleCourseSectionDTO;
 import all.component.diplomna.model.dto.MoodleModuleDTO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class MoodleConverter {
 
-    private static Logger logger = Logger.getLogger(MoodleConverter.class);
+    private static Logger logger = LogManager.getLogger(MoodleConverter.class);
 
     public MoodleCourseSectionMO convertDtoToMo(MoodleCourseSectionDTO section, Long courseId, String courseDisplayName) {
         MoodleCourseSectionMO mo = new MoodleCourseSectionMO();
@@ -36,6 +39,7 @@ public class MoodleConverter {
         mo.setVisible(moduleDTO.getVisible());
         mo.setUserVisible(moduleDTO.isUserVisible());
         mo.setCourseSection(sectionMO);
+        mo.setModName(moduleDTO.getModname());
         if (moduleDTO.getContents() != null) {
             Arrays.stream(moduleDTO.getContents()).forEach(contentDTO -> mo.addContent(convertDtoToMo(contentDTO, mo)));
         }
@@ -51,15 +55,5 @@ public class MoodleConverter {
         mo.setAuthor(contentDTO.getAuthor());
         mo.setModule(moduleMO);
         return mo;
-    }
-
-    public MoodleCourseStatisticsMO gatherStatistics() {
-//        MoodleCourseStatisticsMO mo = new MoodleCourseStatisticsMO();
-//        mo.setModuleName(course.getName());
-//        course.get
-//        mo.setNews(course.getnewsitems());
-//        mo.setSections(course.getNumsections());
-//        mo.setFiles(course.get);
-        return null;
     }
 }

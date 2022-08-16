@@ -13,7 +13,6 @@ public abstract class DaoBaseImpl<T extends ModelBase> implements DaoBase<T> {
 
     public static final int NO_MAX_RESULT_LIMIT = -1;
     private static final Object[] NO_PARAMS = null;
-//    protected Logger logger = LoggerFactory.getLogger(getClass());
     protected Class<T> entityClass;
 
     @SuppressWarnings("unchecked")
@@ -36,7 +35,9 @@ public abstract class DaoBaseImpl<T extends ModelBase> implements DaoBase<T> {
     @Override
     public List<T> find(final String query, final Object[] params, final int size) {
         Query queryObj = getEntityManager().createQuery(query);
-        queryObj.setMaxResults(size);
+        if (size != -1) {
+            queryObj.setMaxResults(size);
+        }
         setParams(queryObj, params);
         return queryObj.getResultList();
     }
@@ -71,6 +72,13 @@ public abstract class DaoBaseImpl<T extends ModelBase> implements DaoBase<T> {
     public void delete(long id) {
         T modelBaseObj = get(id);
         getEntityManager().remove(modelBaseObj);
+    }
+
+    @Override
+    public void deleteAll() {
+        String deleteStr = "delete from " + entityClass.getSimpleName();
+        Query query = getEntityManager().createQuery(deleteStr);
+        query.executeUpdate();
     }
 
     private void setParams(Query query, final Object[] params) {

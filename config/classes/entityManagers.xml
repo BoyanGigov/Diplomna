@@ -8,15 +8,13 @@
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:jpaVendorAdapter-ref="jpaVendorAdapter"
           p:persistenceUnitName="diplomnaEntityManager">
-        <property name="persistenceXmlLocation" value="WEB-INF\persistence.xml"></property>
-        <property name="dataSource" ref="dataSource1"></property>
+        <property name="persistenceXmlLocation" value="WEB-INF\classes\persistence.xml"></property>
+        <property name="dataSource" ref="dataSourceXmlBean"></property>
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle12cDialect</prop>
-<!--             was 9i, updated to Oracle12c dialect to support v18 oracle db; also present in commonContext.xml-->
+<!--             Oracle12c dialect to support v18 oracle db; also present in commonContext.xml-->
             </props>
         </property>
     </bean>
-<!--    p:persistenceXmlLocation="WEB-INF\persistence.xml"-->
-<!--    p:dataSource-ref="dataSource1"-->
 </beans>

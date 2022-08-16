@@ -3,13 +3,32 @@ package all.component.diplomna.model;
 
 import all.persistence.ModelBase;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "MOODLE_SECTION")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class MoodleCourseSectionMO extends ModelBase {
+
+    private static final long serialVersionUID = -12345678903L;
+
+    public MoodleCourseSectionMO() {
+
+    }
+
+    public MoodleCourseSectionMO(Long courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+    }
 
     @Id
     @Column(name = "ID")
@@ -52,17 +71,15 @@ public class MoodleCourseSectionMO extends ModelBase {
     public void setModules(Set<MoodleModuleMO> modules) {
         if (this.modules == null) {
             this.modules = new HashSet<>();
-        } else {
-            this.modules.addAll(modules);
         }
+        this.modules.addAll(modules);
     }
 
     public void addMoudle(MoodleModuleMO module) {
         if (this.modules == null) {
             this.modules = new HashSet<>();
-        } else {
-            this.modules.add(module);
         }
+        this.modules.add(module);
     }
 
     public Long getCourseId() {

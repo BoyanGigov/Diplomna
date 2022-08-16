@@ -15,13 +15,8 @@
         <hibernate.version>5.4.31.Final</hibernate.version>
     </properties>
 
-<!--    <properties>-->
-<!--        <maven.compiler.target>11</maven.compiler.target>-->
-<!--        <maven.compiler.source>11</maven.compiler.source>-->
-<!--    </properties>-->
-
     <dependencies>
-<!--        spring 5.2.12.RELEASE dependencies-->
+<!--        spring dependencies-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -76,12 +71,6 @@
             <version>${spring.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-webmvc</artifactId>-->
-<!--            <version>${spring.version}</version>-->
-<!--        </dependency>-->
-
 <!--        aspectjweaver 1.9.6 (autoloads spring ApplicationContext)-->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -97,7 +86,6 @@
         </dependency>
 
 <!--        jersey 2.34 dependencies-->
-
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
@@ -153,12 +141,6 @@
             <version>1.0.2.Final</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-annotations</artifactId>-->
-<!--            <version>${hibernate.version}</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -191,53 +173,39 @@
             <version>2.8.6</version>
         </dependency>
 
-<!--        logger dependency-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.7.25</version>
-        </dependency>
+<!--        logger dependencies-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.7</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.7</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
+            <artifactId>log4j-web</artifactId>
             <version>2.7</version>
         </dependency>
 
 <!--        json mapper dependency-->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson1</artifactId>
-            <version>2.34</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${jersey.version}</version>
         </dependency>
 
 <!--        compile dependency-->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
-            <version>8.5.23</version>
+            <version>7.0.57</version>
             <scope>compile</scope>
         </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>com.sun.jersey.contribs</groupId>-->
-<!--            <artifactId>jersey-wadl-json-schema</artifactId>-->
-<!--            <version>1.19.4</version>-->
-<!--        </dependency>-->
 
     </dependencies>
 
@@ -245,14 +213,6 @@
     <build>
         <finalName>diplomna-webapp</finalName>
         <plugins>
-<!--            <plugin>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--&lt;!&ndash;                <version>3.6.3</version>&ndash;&gt;-->
-<!--                <configuration>-->
-<!--                    <source>1.6</source>-->
-<!--                    <target>1.6</target>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -264,6 +224,7 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -272,6 +233,7 @@
 <!--                    <webXml>config/web.xml</webXml>-->
 <!--                </configuration>-->
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

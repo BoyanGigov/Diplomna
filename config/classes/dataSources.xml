@@ -5,10 +5,11 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                     http://www.springframework.org/schema/jdbc http://www.springFramework.org/schema/jdbc/spring-jdbc-4.0.xsd">
 
-    <bean id="dataSource1" class="all.persistence.DiplomnaDataSource" destroy-method="close">
+    <bean id="dataSourceXmlBean" class="all.persistence.DiplomnaDataSource" destroy-method="close">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url"
-                  value="jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XEPDB1) ) )"/>
+                  value="jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+                  (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XEPDB1) ) )"/>
 <!--        <property name="username" value="sys"/>-->
 <!--        <property name="password" value="StarW"/>-->
         <property name="username" value="DIPLOMNA"/>
@@ -18,3 +19,4 @@
     </bean>
 
 </beans>
+

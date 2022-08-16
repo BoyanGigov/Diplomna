@@ -9,10 +9,11 @@
         <class>all.component.diplomna.model.MoodleCourseSectionMO</class>
         <class>all.component.diplomna.model.MoodleModuleMO</class>
         <class>all.component.diplomna.model.MoodleContentMO</class>
+        <class>all.component.diplomna.model.MoodleCourseStatisticsMO</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
-            <property name="hibernate.connection.datasource" value="dataSource1"/>
+            <property name="hibernate.connection.datasource" value="dataSourceXmlBean"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
@@ -21,3 +22,4 @@
     </persistence-unit>
 
 </persistence>
+

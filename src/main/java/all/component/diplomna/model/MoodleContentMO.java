@@ -2,11 +2,24 @@ package all.component.diplomna.model;
 
 import all.persistence.ModelBase;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+//import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+//import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "MOODLE_CONTENT")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class MoodleContentMO extends ModelBase {
+
+    private static final long serialVersionUID = -12345678904L;
 
     @Id
     @Column(name = "ID", unique = true)
@@ -15,10 +28,6 @@ public class MoodleContentMO extends ModelBase {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumns({
-//            @JoinColumn(name = "SECTION_ID", referencedColumnName = "SECTION_ID", nullable = false),
-//            @JoinColumn(name = "MODULE_ID", referencedColumnName = "MODULE_ID", nullable = false)
-//    })
     @JoinColumn(name = "MODULE_ID", referencedColumnName = "ID", nullable = false, unique = true)
     private MoodleModuleMO module;
 

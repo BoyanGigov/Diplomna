@@ -1,21 +1,18 @@
 package all.component.diplomna.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-//@JsonIgnoreProperties(ignoreUnknown = true)
 public class MoodleModuleDTO {
 
     private Long id;
     private String name;
     private Integer visible;
     private Boolean uservisible;
+    private String modname;
     private MoodleContentDTO[] contents;
-    private MoodleModuleContentInfoDTO contentsinfo;
 
     MoodleModuleDTO() {
 
@@ -53,19 +50,19 @@ public class MoodleModuleDTO {
         this.uservisible = uservisible;
     }
 
+    public String getModname() {
+        return modname;
+    }
+
+    public void setModname(String modname) {
+        this.modname = modname;
+    }
+
     public MoodleContentDTO[] getContents() {
-        return contents;
+        return contents != null ? contents : new MoodleContentDTO[0];
     }
 
     public void setContents(MoodleContentDTO[] contents) {
         this.contents = contents;
-    }
-
-    public MoodleModuleContentInfoDTO getContentsinfo() {
-        return contentsinfo;
-    }
-
-    public void setContentsinfo(MoodleModuleContentInfoDTO contentsinfo) {
-        this.contentsinfo = contentsinfo;
     }
 }

@@ -8,6 +8,11 @@
     http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd ">
 
     <changeSet author="Boyan.Gigov" id="create-MOODLE_SECTION">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MOODLE_SECTION"/>
+            </not>
+        </preConditions>
         <createTable tableName="MOODLE_SECTION">
             <column name="ID" type="number" remarks="primary key">
                 <constraints primaryKey="true" nullable="false"/>
@@ -37,11 +42,16 @@
     </changeSet>
 
     <changeSet author="Boyan.Gigov" id="create-MOODLE_MODULE">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MOODLE_MODULE"/>
+            </not>
+        </preConditions>
         <createTable tableName="MOODLE_MODULE">
             <column name="ID" type="number" remarks="primary key">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="SECTION_ID" type="number" remarks="id of the section as provided by moodle">
+            <column name="SECTION_ID" type="number" remarks="id of the section from MOODLE_SECTION table">
                 <constraints nullable="false"/>
             </column>
             <column name="NAME" type="varchar2(300 char)" remarks="display name">
@@ -65,11 +75,16 @@
     </changeSet>
 
     <changeSet author="Boyan.Gigov" id="create-MOODLE_CONTENT">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MOODLE_CONTENT"/>
+            </not>
+        </preConditions>
         <createTable tableName="MOODLE_CONTENT">
             <column name="ID" type="number" remarks="primary key">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="MODULE_ID" type="number" remarks="id of the module as provided by moodle">
+            <column name="MODULE_ID" type="number" remarks="id of the module in MOODLE_MODULE table">
                 <constraints nullable="false"/>
             </column>
             <column name="TYPE" type="varchar2(20 char)" remarks="type of the content, file or url">
@@ -94,6 +109,31 @@
                                  initiallyDeferred="true"
                                  referencedTableName="MOODLE_MODULE"
                                  referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet author="Boyan.Gigov" id="create-MOODLE_STATISTICS">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MOODLE_STATISTICS"/>
+            </not>
+        </preConditions>
+        <createTable tableName="MOODLE_STATISTICS">
+            <column name="ID" type="number" remarks="primary key">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="COURSE_ID" type="number" remarks="course_id as seen in MOODLE_SECTION table">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COURSE_NAME" type="varchar2(300 char)" remarks="course_name as seen in MOODLE_SECTION table">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FILES" type="number" remarks="number of files in this course"/>
+            <column name="URLS" type="number" remarks="number of urls in this course"/>
+            <column name="RESOURCES" type="number" remarks="number of resources in this course"/>
+            <column name="WIKIS" type="number" remarks="number of wikis in this course"/>
+            <column name="FORUM_DISCUSSIONS" type="number" remarks="number of forum threads in this course"/>
+        </createTable>
+        <createSequence sequenceName="MOODLE_STATISTICS_SEQ" incrementBy="1" minValue="1" startValue="1" />
     </changeSet>
 
 </databaseChangeLog>

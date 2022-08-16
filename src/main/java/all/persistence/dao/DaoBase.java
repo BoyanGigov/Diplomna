@@ -22,6 +22,8 @@ public interface DaoBase<T extends ModelBase> {
 
     void delete(long id);
 
+    void deleteAll();
+
     void persist(T modelBaseObj);
 
     T persistAndFlush(T modelBaseObj);
