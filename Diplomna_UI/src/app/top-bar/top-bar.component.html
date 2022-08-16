@@ -1,0 +1,15 @@
+<!--<a [routerLink]="['/']">-->
+<!--    <h1>Home</h1>-->
+<!--</a>-->
+
+<div *ngIf=isShowNavigation()>
+    <a style="float: inline-start; padding-right: 20px;" [routerLink]="['/courses']">
+        <h2>Courses</h2>
+    </a>
+    <a style="float: inline-start; padding-right: 20px;" [routerLink]="['/statistics']">
+        <h2>Statistics</h2>
+    </a>
+    <a style="position: absolute; right: 0; padding-right: 20px;" [routerLink]="['/about']">
+        <h2>About</h2>
+    </a>
+</div>

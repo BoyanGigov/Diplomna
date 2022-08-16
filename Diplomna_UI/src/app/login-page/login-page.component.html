@@ -1,0 +1,19 @@
+<mat-card>
+    <div>
+        <mat-form-field style="width:100px; font-size:15px;">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" #username/>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field style="width:100px; font-size:15px;">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" #password/>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+    </div>
+    <div *ngIf="isLoginFailed" style="padding-top: 10px; font-size: small; color: red;"><i><strong>{{errorMessage}}</strong></i></div>
+
+</mat-card>

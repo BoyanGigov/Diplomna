@@ -1,0 +1,68 @@
+<div>
+    <h1>Courses</h1>
+</div>
+
+
+<mat-card>
+    <div>
+        <div style="float:left">
+            <mat-form-field style="width:400px; font-size:15px;">
+                <mat-label>Select a course</mat-label>
+                <mat-select multiple="false"
+                            [(ngModel)]="course"
+                            style="width:400px">
+                    <mat-option *ngFor="let course of moodleAllCoursesData"
+                                [value]="course.courseName"
+                                matTooltip="{{course.courseName}}"
+                                (click)="changeCourse($event, course.courseId, course.courseName)"
+                                style="width:400px">
+                        {{course.courseName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div style="float:inline-start; padding-left: 10px">
+            <button mat-raised-button color="warn" (click)="updateCourses()">Refresh entire database</button>
+        </div>
+    </div>
+
+    <br style="clear:both" /> <!--- clears the float  -->
+
+    <div style="padding-bottom: 20px">
+        <button *ngIf="selectedCourseId" mat-raised-button (click)="downloadCourseFiles()">Download course files</button>
+    </div>
+
+        <table *ngIf="selectedCourseId" mat-table [dataSource]="moodleCourseTableData" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Section Column -->
+        <ng-container matColumnDef="sectionName">
+            <th mat-header-cell *matHeaderCellDef> Section</th>
+            <td mat-cell *matCellDef="let element"> {{element.sectionName}}</td>
+        </ng-container>
+
+        <!-- Module Column -->
+        <ng-container matColumnDef="moduleName">
+            <th mat-header-cell *matHeaderCellDef> Module</th>
+            <td mat-cell *matCellDef="let element"> {{element.moduleName}}</td>
+        </ng-container>
+
+        <!-- File Column -->
+        <ng-container matColumnDef="fileName">
+            <th mat-header-cell *matHeaderCellDef> File</th>
+            <td mat-cell *matCellDef="let element"> {{element.fileName}}</td>
+        </ng-container>
+
+        <!-- Author Column -->
+        <ng-container matColumnDef="author">
+            <th mat-header-cell *matHeaderCellDef> Author</th>
+            <td mat-cell *matCellDef="let element"> {{element.author}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+</mat-card>

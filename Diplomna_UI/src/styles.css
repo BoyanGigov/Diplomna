@@ -1,0 +1,43 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* Top Bar */
+
+app-top-bar {
+  width: auto;
+  height: 68px;
+  background-color: #19d2d2;
+  padding: 16px;
+  padding-left: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+app-top-bar h1 {
+  color: mediumblue;
+  margin: 0;
+}
+
+app-top-bar h2 {
+  margin: 0;
+}
+
+/* Fancy Button */
+
+.fancy-button {
+  /*background-color: white;*/
+  color: #191ad2;
+}
+
+.fancy-button i.material-icons {
+  color: #191ad2;
+  padding-right: 5px;
+}
+
+/* generic */
+.center {
+    text-align: center;
+    position: relative;
+    top: 50%;
+}

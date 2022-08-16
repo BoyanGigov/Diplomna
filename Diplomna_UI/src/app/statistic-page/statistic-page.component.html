@@ -1,0 +1,33 @@
+<div>
+    <h1>Statistics</h1>
+</div>
+
+
+<mat-card>
+    <div>
+        <div style="float:left">
+            <mat-form-field style="width:400px; font-size:15px;">
+                <mat-label>Select a course</mat-label>
+                <mat-select multiple="false"
+                            [(ngModel)]="course"
+                            style="width:400px">
+                    <mat-option *ngFor="let course of moodleAllCoursesData"
+                                [value]="course.courseName"
+                                matTooltip="{{course.courseName}}"
+                                (click)="changeCourse($event, course.courseId, course.courseName)"
+                                style="width:400px">
+                        {{course.courseName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div style="float:inline-start; padding-left: 10px">
+            <button mat-raised-button color="warn" (click)="updateCourses()">Refresh entire database</button>
+        </div>
+    </div>
+
+    <br style="clear:both" /> <!--- clears the float  -->
+
+    <div id="barChart" style="height:60vh; width:80vw"></div>
+
+</mat-card>
